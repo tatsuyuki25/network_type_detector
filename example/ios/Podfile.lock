@@ -1,35 +1,16 @@
 PODS:
   - Flutter (1.0.0)
-  - integration_test (0.0.1):
-    - Flutter
-  - network_type_detector (0.0.1):
-    - Flutter
-    - ReachabilitySwift
-  - ReachabilitySwift (5.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - network_type_detector (from `.symlinks/plugins/network_type_detector/ios`)
-
-SPEC REPOS:
-  trunk:
-    - ReachabilitySwift
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
-  network_type_detector:
-    :path: ".symlinks/plugins/network_type_detector/ios"
 
 SPEC CHECKSUMS:
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  integration_test: 13825b8a9334a850581300559b8839134b124670
-  network_type_detector: 5d093dd6f28c9e4b18fb92de3e3695980db4d99f
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2

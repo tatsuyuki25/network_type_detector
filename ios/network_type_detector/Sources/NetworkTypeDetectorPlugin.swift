@@ -70,41 +70,46 @@ extension NetworkTypeDetectorPlugin: FlutterStreamHandler {
     case .unavailable:
       return NetworkStatus.unreach.value
     case .cellular:
-        if Float(String(UIDevice.current.systemVersion.split(separator: ".").first!)) ?? 0 >= 7.0 {
-          let teleInfo = CTTelephonyNetworkInfo()
-          guard let access = teleInfo.currentRadioAccessTechnology else {
-            return  NetworkStatus.other.value
+      let teleInfo = CTTelephonyNetworkInfo()
+      var access: String?
+      if #available(iOS 12.0, *) {
+          guard let serviceDict = teleInfo.serviceCurrentRadioAccessTechnology,
+                let firstKey = serviceDict.keys.first else {
+              return NetworkStatus.other.value
           }
-          if [CTRadioAccessTechnologyEdge,
-            CTRadioAccessTechnologyGPRS,
-            CTRadioAccessTechnologyCDMA1x].contains(access) {
-            return NetworkStatus.mobile2G.value
-          }
+          access = serviceDict[firstKey]
+      } else {
+          access = teleInfo.currentRadioAccessTechnology
+      }
+      
+      guard let access = access else {
+        return  NetworkStatus.other.value
+      }
 
-          if [CTRadioAccessTechnologyHSDPA,
-            CTRadioAccessTechnologyWCDMA,
-            CTRadioAccessTechnologyHSUPA,
-            CTRadioAccessTechnologyCDMAEVDORev0,
-            CTRadioAccessTechnologyCDMAEVDORevA,
-            CTRadioAccessTechnologyCDMAEVDORevB,
-            CTRadioAccessTechnologyeHRPD].contains(access) {
-            return NetworkStatus.mobile3G.value
-          }
+      if [CTRadioAccessTechnologyEdge,
+        CTRadioAccessTechnologyGPRS,
+        CTRadioAccessTechnologyCDMA1x].contains(access) {
+        return NetworkStatus.mobile2G.value
+      }
 
-          if [CTRadioAccessTechnologyLTE].contains(access) {
-            return NetworkStatus.mobile4G.value
-          }
-          if #available(iOS 14.1, *), [CTRadioAccessTechnologyNRNSA,
-                                      CTRadioAccessTechnologyNR].contains(access) {
-            return NetworkStatus.mobile5G.value
-        }
-          return NetworkStatus.other.value
+      if [CTRadioAccessTechnologyHSDPA,
+        CTRadioAccessTechnologyWCDMA,
+        CTRadioAccessTechnologyHSUPA,
+        CTRadioAccessTechnologyCDMAEVDORev0,
+        CTRadioAccessTechnologyCDMAEVDORevA,
+        CTRadioAccessTechnologyCDMAEVDORevB,
+        CTRadioAccessTechnologyeHRPD].contains(access) {
+        return NetworkStatus.mobile3G.value
+      }
 
-        }else{
-          return NetworkStatus.other.value
-        }
-    default:
-      return NetworkStatus.unreach.value
+      if [CTRadioAccessTechnologyLTE].contains(access) {
+        return NetworkStatus.mobile4G.value
+      }
+      if #available(iOS 14.1, *), [CTRadioAccessTechnologyNRNSA,
+                                  CTRadioAccessTechnologyNR].contains(access) {
+        return NetworkStatus.mobile5G.value
+    }
+      return NetworkStatus.other.value
     }
   }
 

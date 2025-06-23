@@ -7,16 +7,16 @@ Pod::Spec.new do |s|
   s.version          = '0.0.1'
   s.summary          = 'This package allows your Flutter app to detect the current network type, supporting 2G, 3G, 4G, 5G, and Wi-Fi.'
   s.description      = <<-DESC
-  This package allows your Flutter app to detect the current network type, supporting 2G, 3G, 4G, 5G, and Wi-Fi.
+A Flutter plugin to detect the current network type. It provides support for identifying various network connections such as 2G, 3G, 4G, 5G, and Wi-Fi by leveraging native platform APIs.
                        DESC
   s.homepage         = 'https://github.com/tatsuyuki25/network_type_detector'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :type => 'MIT', :file => '../LICENSE' }
   s.author           = { 'tatsuyuki' => 'jordandes@gmail.com' }
-  s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source           = { :git => 'https://github.com/tatsuyuki25/network_type_detector.git', :tag => s.version.to_s }
+  s.source_files = 'network_type_detector/Sources/**/*'
   s.dependency 'Flutter'
-  s.dependency 'ReachabilitySwift'
-  s.platform = :ios, '11.0'
+  s.dependency 'ReachabilitySwift', '~> 5.2.4'
+  s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
